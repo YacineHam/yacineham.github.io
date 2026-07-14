@@ -1,0 +1,61 @@
+---
+import { t, type Locale } from '../i18n/ui';
+import { certifications } from '../data/certifications';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section id="certifications">
+  <h2 class="section-title">{t(locale, 'certs.title')}</h2>
+  <div class="cert-grid">
+    {
+      certifications.map((cert) => (
+        <div class="cert-card">
+          <span
+            class="cert-logo-wrap"
+            data-logo={cert.logo.split('/').pop()?.split('.').shift()}
+          >
+            {cert.logo.includes('github') ? (
+              <>
+                <img src={cert.logo} alt={cert.issuer + ' logo'} class="cert-logo-img logo-light" width="28" height="28" />
+                <img src={cert.logo.replace('.svg', '-white.svg')} alt={cert.issuer + ' logo'} class="cert-logo-img logo-dark" width="28" height="28" />
+              </>
+            ) : (
+              <img src={cert.logo} alt={cert.issuer + ' logo'} class="cert-logo-img" width="28" height="28" />
+            )}
+          </span>
+          <div class="cert-body">
+            <h3>{cert.name}</h3>
+            <p class="cert-meta">{cert.issuer} · {cert.year}</p>
+          </div>
+          {cert.url && (
+            <a
+              class="cert-verify"
+              href={cert.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${t(locale, 'certs.verify')} — ${cert.name}`}
+            >
+              {t(locale, 'certs.verify')}
+              <Icon name="external" size={15} />
+            </a>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .cert-logo-img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+</style>

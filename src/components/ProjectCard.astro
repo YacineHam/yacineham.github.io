@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { t, localePath, slugOf, type Locale } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const { title, summary, tags, icon, logo, brandColor, repo, link } = project.data;
+const url = localePath(locale, `/projects/${slugOf(project.id)}`);
+---
+
+<article class="project-card">
+  <div class="card-head">
+    <h3><a href={url}>{title}</a></h3>
+    {logo ? (
+      <span
+        class="card-logo-wrap"
+        data-logo={logo.split('/').pop()?.split('.').shift()}
+      >
+        {logo.includes('github') ? (
+          <>
+            <img src={logo} alt={title + ' logo'} class="card-logo-img logo-light" width="28" height="28" />
+            <img src={logo.replace('.svg', '-white.svg')} alt={title + ' logo'} class="card-logo-img logo-dark" width="28" height="28" />
+          </>
+        ) : (
+          <img src={logo} alt={title + ' logo'} class="card-logo-img" width="28" height="28" />
+        )}
+      </span>
+    ) : (
+      <span class="card-icon"><Icon name={icon} size={22} /></span>
+    )}
+  </div>
+
+  <ul class="chips">
+    {tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+
+  <p>{summary}</p>
+
+  <div class="card-foot">
+    <a class="read-more" href={url}>{t(locale, 'projects.readMore')} →</a>
+    <span class="card-links">
+      {
+        repo && (
+          <a href={repo} target="_blank" rel="noopener noreferrer" aria-label={t(locale, 'projects.source')} title={t(locale, 'projects.source')}>
+            <Icon name="github" size={18} />
+          </a>
+        )
+      }
+      {
+        link && (
+          <a href={link} target="_blank" rel="noopener noreferrer" aria-label={t(locale, 'projects.live')} title={t(locale, 'projects.live')}>
+            <Icon name="external" size={18} />
+          </a>
+        )
+      }
+    </span>
+  </div>
+</article>

@@ -1,0 +1,753 @@
+/* ---------------------------------------------------------------------------
+   Design tokens — light & dark palettes
+--------------------------------------------------------------------------- */
+:root {
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas,
+    'Liberation Mono', monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+
+  --bg: #fdfdfc;
+  --bg-raised: #f4f4f2;
+  --text: #1c1e21;
+  --text-muted: #5c6470;
+  --border: #e2e2df;
+  --accent: #0969da;
+  --added: #1a7f37;
+  --changed: #9a6700;
+  --deprecated: #cf222e;
+  --chip-bg: #eef1f4;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0d1117;
+  --bg-raised: #161b22;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --added: #3fb950;
+  --changed: #d29922;
+  --deprecated: #f85149;
+  --chip-bg: #21262d;
+
+  color-scheme: dark;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 118%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-body);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.container {
+  max-width: 86rem;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Header / footer
+--------------------------------------------------------------------------- */
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.site-header .brand {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.site-header nav a {
+  color: var(--text-muted);
+}
+
+.site-header nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+}
+
+#theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 1.5rem 0 2.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero — avatar (left) + centered text block (right)
+--------------------------------------------------------------------------- */
+.hero {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 0 3.5rem;
+}
+
+.hero-avatar {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  margin: 0 auto;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--bg);
+  background: linear-gradient(145deg, var(--accent), #7c5cff);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.hero-body {
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  margin: 0 0 0.15rem;
+}
+
+.hero .role {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  margin: 0 0 1.5rem;
+}
+
+.hero .bio {
+  margin: 0 auto 1.5rem;
+  text-align: left;
+  max-width: 44rem;
+}
+
+.hero hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+.hero .interests {
+  text-align: left;
+  color: var(--text-muted);
+  margin: 0 auto 1.75rem;
+  max-width: 44rem;
+}
+
+.hero .interests strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.social a {
+  color: var(--text-muted);
+  display: inline-flex;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.social a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.social svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.chips li {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background: var(--chip-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Sections
+--------------------------------------------------------------------------- */
+section {
+  padding-top: 3.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 400;
+  margin: 0 0 1.5rem;
+}
+
+.section-intro {
+  color: var(--text-muted);
+  margin: -1rem 0 2rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Project cards
+--------------------------------------------------------------------------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.card-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--accent);
+  background: var(--chip-bg);
+  border: 1px solid var(--border);
+}
+
+.card-logo-wrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s ease, width 0.2s ease;
+}
+
+/* Wide wordmark logo overrides for project cards */
+.card-logo-wrap[data-logo='ureed'],
+.card-logo-wrap[data-logo='okadoo'],
+.card-logo-wrap[data-logo='tarjama'] {
+  width: 7.2rem;
+  padding: 0 0.6rem;
+}
+
+.project-card:hover .card-logo-wrap {
+  box-shadow: 0 0 0 3px currentColor;
+}
+
+.card-logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 28px;
+  max-height: 28px;
+  object-fit: contain;
+}
+
+/* Allow wide logos to take up more horizontal space inside the wrapper */
+.card-logo-wrap[data-logo='ureed'] .card-logo-img,
+.card-logo-wrap[data-logo='okadoo'] .card-logo-img,
+.card-logo-wrap[data-logo='tarjama'] .card-logo-img {
+  max-width: 6.2rem;
+  max-height: 1.8rem;
+}
+
+.project-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.project-card h3 a {
+  color: var(--text);
+}
+
+.project-card h3 a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.project-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  flex-grow: 1;
+}
+
+.project-card .chips {
+  margin: 0;
+}
+
+.card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.project-card .read-more {
+  font-size: 0.85rem;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 1.1rem;
+}
+
+.project-card .read-more:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card-links {
+  display: inline-flex;
+  gap: 0.85rem;
+}
+
+.card-links a {
+  color: var(--text-muted);
+  display: inline-flex;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+/* GitHub icon: dark mode needs explicit light color to be visible */
+:root[data-theme='dark'] .card-links a {
+  color: var(--text-muted);
+}
+
+.card-links a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------------------------
+   Certifications
+--------------------------------------------------------------------------- */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 1.25rem;
+}
+
+.cert-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  padding: 1.15rem 1.35rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cert-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.cert-logo-wrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s ease;
+}
+
+.cert-card:hover .cert-logo-wrap {
+  box-shadow: 0 0 0 3px currentColor;
+}
+
+.cert-logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 24px;
+  max-height: 24px;
+  object-fit: contain;
+}
+
+/* ── Logo visibility fixes ─────────────────────────────────────────────── */
+
+/* Toggle logos based on dark/light theme */
+.logo-dark {
+  display: none !important;
+}
+.logo-light {
+  display: block !important;
+}
+
+:root[data-theme='dark'] .logo-light {
+  display: none !important;
+}
+:root[data-theme='dark'] .logo-dark {
+  display: block !important;
+}/* Custom logo wrappers for Ureed (Brand blue background) */
+.card-logo-wrap[data-logo='ureed'],
+.changelog-logo-wrap[data-logo='ureed'] {
+  background: #006df5 !important;
+  border-color: #006df5 !important;
+}
+
+/* Custom logo wrappers for Tarjama (Brand dark background) */
+.card-logo-wrap[data-logo='tarjama'],
+.changelog-logo-wrap[data-logo='tarjama'] {
+  background: #121212 !important;
+  border-color: #121212 !important;
+}
+.cert-body {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.cert-body h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.cert-meta {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.cert-verify {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.cert-verify:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Changelog
+--------------------------------------------------------------------------- */
+#changelog {
+  max-width: 48rem;
+}
+
+.changelog-entry {
+  border-left: 2px solid var(--border);
+  padding: 0 0 2.25rem 1.5rem;
+  position: relative;
+}
+
+.changelog-entry::before {
+  content: '';
+  position: absolute;
+  left: -0.4rem;
+  top: 0.4rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+
+/* Header row that holds optional company logo + title/date */
+.changelog-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.15rem;
+}
+
+.changelog-logo-wrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: width 0.2s ease;
+}
+
+/* Wide wordmark logo overrides for changelog entries */
+.changelog-logo-wrap[data-logo='ureed'],
+.changelog-logo-wrap[data-logo='okadoo'],
+.changelog-logo-wrap[data-logo='tarjama'] {
+  width: 7.6rem;
+  padding: 0 0.6rem;
+}
+
+.changelog-logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 32px;
+  max-height: 32px;
+  object-fit: contain;
+}
+
+/* Allow wide logos to take up more horizontal space inside the wrapper */
+.changelog-logo-wrap[data-logo='ureed'] .changelog-logo-img,
+.changelog-logo-wrap[data-logo='okadoo'] .changelog-logo-img,
+.changelog-logo-wrap[data-logo='tarjama'] .changelog-logo-img {
+  max-width: 6.4rem;
+  max-height: 2rem;
+}
+
+.changelog-entry h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+}
+
+.changelog-entry h3 .version {
+  color: var(--accent);
+}
+
+.changelog-entry .meta {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.changelog-entry .chips {
+  margin-bottom: 1rem;
+}
+
+.change-group h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 1rem 0 0.35rem;
+}
+
+.change-group h4::before {
+  content: '● ';
+  font-size: 0.6rem;
+  vertical-align: 0.15em;
+}
+
+.change-group.added h4 {
+  color: var(--added);
+}
+
+.change-group.changed h4 {
+  color: var(--changed);
+}
+
+.change-group.deprecated h4 {
+  color: var(--deprecated);
+}
+
+.change-group ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.change-group li {
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Project detail page (markdown body)
+--------------------------------------------------------------------------- */
+.prose {
+  padding-top: 2.5rem;
+  max-width: 44rem;
+}
+
+.prose h1 {
+  font-size: 1.7rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose h2 {
+  font-size: 1.15rem;
+  margin-top: 2.2rem;
+}
+
+.prose h2 {
+  font-weight: 600;
+}
+
+.prose .meta {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.prose .back-link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile
+--------------------------------------------------------------------------- */
+/* Stack the hero (avatar above text) before it gets cramped */
+@media (max-width: 780px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2.75rem 0 2.5rem;
+    text-align: center;
+  }
+
+  .hero-avatar {
+    width: 11rem;
+    height: 11rem;
+    font-size: 3rem;
+  }
+
+  .hero .bio,
+  .hero .interests {
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .changelog-entry {
+    padding-left: 1.1rem;
+  }
+
+  .container {
+    padding: 0 1.25rem;
+  }
+}

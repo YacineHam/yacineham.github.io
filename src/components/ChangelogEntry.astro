@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { t, type Locale } from '../i18n/ui';
+
+interface Props {
+  entry: CollectionEntry<'changelog'>;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { version, title, location, startDate, endDate, tags, added, changed, deprecated, logo, brandColor } =
+  entry.data;
+
+const fmt = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' });
+const period = `${fmt.format(startDate)} → ${endDate ? fmt.format(endDate) : t(locale, 'changelog.present')}`;
+
+// Source files may carry <!-- TODO --> notes for the author; never render them.
+const clean = (s: string) => s.replace(/<!--[\s\S]*?-->/g, '').trim();
+
+const groups = [
+  { key: 'added', label: t(locale, 'changelog.added'), items: added },
+  { key: 'changed', label: t(locale, 'changelog.changed'), items: changed },
+  { key: 'deprecated', label: t(locale, 'changelog.deprecated'), items: deprecated },
+].filter((g) => g.items.length > 0);
+---
+
+<article class="changelog-entry">
+  <div class="changelog-head">
+    {logo && (
+      <span
+        class="changelog-logo-wrap"
+        data-logo={logo.split('/').pop()?.split('.').shift()}
+      >
+        {logo.includes('github') || logo.includes('tcs') ? (
+          <>
+            <img src={logo} alt="" class="changelog-logo-img logo-light" width="32" height="32" aria-hidden="true" />
+            <img src={logo.includes('github') ? logo.replace('.svg', '-white.svg') : logo.replace('.png', '-white.png')} alt="" class="changelog-logo-img logo-dark" width="32" height="32" aria-hidden="true" />
+          </>
+        ) : (
+          <img src={logo} alt="" class="changelog-logo-img" width="32" height="32" aria-hidden="true" />
+        )}
+      </span>
+    )}
+    <div>
+      <h3><span class="version">[{version}]</span> — {title}</h3>
+      <p class="meta">{period}{location && ` · ${location}`}</p>
+    </div>
+  </div>
+  {tags.length > 0 && <ul class="chips">{tags.map((tag) => <li>{tag}</li>)}</ul>}
+  {
+    groups.map((group) => (
+      <div class={`change-group ${group.key}`}>
+        <h4>{group.label}</h4>
+        <ul>
+          {group.items.map((item) => (
+            <li>{clean(item)}</li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</article>

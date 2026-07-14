@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { t, localePath, type Locale } from '../i18n/ui';
+import { site } from '../site';
+
+interface Props {
+  locale: Locale;
+  /** Path without locale prefix, e.g. "/" or "/projects/okadoo" — used by the lang switcher. */
+  path: string;
+  title?: string;
+  description?: string;
+}
+
+const { locale, path, title, description } = Astro.props;
+const pageTitle = title ?? t(locale, 'meta.title');
+const pageDescription = description ?? t(locale, 'meta.description');
+const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang="fr" href={new URL(localePath('fr', path), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(localePath('en', path), Astro.site)} />
+    <script is:inline>
+      // Set theme before first paint to avoid a flash. Falls back to OS preference.
+      (() => {
+        // Default to dark (matches the site's primary look); users can toggle to light.
+        const theme = localStorage.getItem('theme') ?? 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href={localePath(locale, '/')}>~/yacine-hamitou</a>
+        <nav>
+          <a href={localePath(locale, '/') + '#projects'}>{t(locale, 'nav.projects')}</a>
+          <a href={localePath(locale, '/') + '#certifications'}>{t(locale, 'nav.certs')}</a>
+          <a href={localePath(locale, '/') + '#changelog'}>{t(locale, 'nav.changelog')}</a>
+          <a href={site.cvPath} download>{t(locale, 'nav.resume')}</a>
+          <a href={localePath(otherLocale, path)} rel="alternate" hreflang={otherLocale}>
+            {t(locale, 'lang.switch')}
+          </a>
+          <button id="theme-toggle" aria-label={t(locale, 'theme.toggle')}>◐</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>© {new Date().getFullYear()} {site.name} · {t(locale, 'footer.builtWith')}</span>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('theme', next);
+      });
+    </script>
+  </body>
+</html>

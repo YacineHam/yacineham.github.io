@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import ProjectCard from './ProjectCard.astro';
+import Certifications from './Certifications.astro';
+import ChangelogEntry from './ChangelogEntry.astro';
+import { t, byLocale, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const projects = byLocale(await getCollection('projects'), locale).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const changelog = byLocale(await getCollection('changelog'), locale).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+---
+
+<Base locale={locale} path="/">
+  <Hero locale={locale} />
+
+  <section id="projects">
+    <h2 class="section-title">{t(locale, 'projects.title')}</h2>
+    <div class="project-grid">
+      {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+    </div>
+  </section>
+
+  <Certifications locale={locale} />
+
+  <section id="changelog">
+    <h2 class="section-title">{t(locale, 'changelog.title')}</h2>
+    <p class="section-intro">{t(locale, 'changelog.intro')}</p>
+    {changelog.map((entry) => <ChangelogEntry entry={entry} locale={locale} />)}
+  </section>
+</Base>
