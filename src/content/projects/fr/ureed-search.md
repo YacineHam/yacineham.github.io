@@ -1,31 +1,27 @@
 ---
 title: "Refonte du moteur de recherche Ureed"
-summary: "Migration vers Elasticsearch : +40 % de pertinence et de rapidité pour 256 000+ utilisateurs actifs."
+summary: "Moteur de recherche refondu avec Elasticsearch : temps de réponse des requêtes réduit de 40 % grâce au passage en filter context."
 tags: [Elasticsearch, Django, PostgreSQL]
 year: 2024
-order: 3
+order: 4
 icon: search
 logo: "/logos/ureed.png"
 brandColor: "#006df5"
-# TODO Yacine : vraie URL du repo, ou supprimer la ligne
-repo: "https://github.com/yacinehamitou/ureed-search"
 ---
 
 ## Contexte
 
-Le moteur de recherche historique d'**Ureed** (recherche de freelances et de missions) montrait ses limites en pertinence comme en performance à mesure que la plateforme grandissait au-delà de 256 000 utilisateurs actifs.
+**Ureed** est une marketplace freelance de 256 000+ utilisateurs actifs, dont j'ai développé et maintenu le backend (Django / DRF, PostgreSQL). J'y ai refondu le moteur de recherche avec **Elasticsearch**.
 
-## Ce que j'ai construit
+## Ce que j'ai fait
 
-- Refonte complète de la recherche sur **Elasticsearch** : modélisation des index, analyzers multilingues (la plateforme opère en arabe et en anglais), et requêtes combinant pertinence textuelle et critères métier.
-- Synchronisation des données PostgreSQL → Elasticsearch fiable et incrémentale.
-- Exposition via l'API Django/DRF existante, sans rupture pour les clients front.
+- Refonte du moteur de recherche sur Elasticsearch.
+- **Passage en filter context** : dans ce mode, Elasticsearch ne calcule pas de score de pertinence pour les clauses concernées et peut mettre leur résultat en cache. Les critères qui servent seulement à filtrer n'ont pas besoin de score.
 
-## Résultats
+## Résultat
 
-- **+40 % de pertinence et de rapidité** des résultats de recherche.
-- Recherche devenue un point fort de l'expérience produit plutôt qu'un point de friction.
+Temps de réponse des requêtes **réduit de 40 %**.
 
 ## Stack
 
-Elasticsearch · Python · Django · Django REST Framework · PostgreSQL · Celery
+Elasticsearch · Python · Django / DRF · PostgreSQL

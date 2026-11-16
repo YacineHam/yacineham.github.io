@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { project, locale } = Astro.props;
-const { title, summary, tags, icon, logo, brandColor, repo, link } = project.data;
+const { title, summary, tags, icon, logo, repo, link } = project.data;
 const url = localePath(locale, `/projects/${slugOf(project.id)}`);
 ---
 
@@ -23,11 +23,11 @@ const url = localePath(locale, `/projects/${slugOf(project.id)}`);
       >
         {logo.includes('github') ? (
           <>
-            <img src={logo} alt={title + ' logo'} class="card-logo-img logo-light" width="28" height="28" />
-            <img src={logo.replace('.svg', '-white.svg')} alt={title + ' logo'} class="card-logo-img logo-dark" width="28" height="28" />
+            <img src={logo} alt="" class="card-logo-img logo-light" width="28" height="28" />
+            <img src={logo.replace('.svg', '-white.svg')} alt="" class="card-logo-img logo-dark" width="28" height="28" />
           </>
         ) : (
-          <img src={logo} alt={title + ' logo'} class="card-logo-img" width="28" height="28" />
+          <img src={logo} alt="" class="card-logo-img" width="28" height="28" />
         )}
       </span>
     ) : (

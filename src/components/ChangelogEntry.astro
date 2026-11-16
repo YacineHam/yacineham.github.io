@@ -8,14 +8,26 @@ interface Props {
 }
 
 const { entry, locale } = Astro.props;
-const { version, title, location, startDate, endDate, tags, added, changed, deprecated, logo, brandColor } =
+const { version, title, location, startDate, endDate, period: periodOverride, tags, added, changed, deprecated, logo } =
   entry.data;
 
 const fmt = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' });
-const period = `${fmt.format(startDate)} → ${endDate ? fmt.format(endDate) : t(locale, 'changelog.present')}`;
+const period =
+  periodOverride ??
+  `${fmt.format(startDate)} → ${endDate ? fmt.format(endDate) : t(locale, 'changelog.present')}`;
 
 // Source files may carry <!-- TODO --> notes for the author; never render them.
 const clean = (s: string) => s.replace(/<!--[\s\S]*?-->/g, '').trim();
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// Items are plain text, with one extra: [label](https://…) becomes a link.
+const renderItem = (s: string) =>
+  escapeHtml(clean(s)).replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
 
 const groups = [
   { key: 'added', label: t(locale, 'changelog.added'), items: added },
@@ -53,7 +65,7 @@ const groups = [
         <h4>{group.label}</h4>
         <ul>
           {group.items.map((item) => (
-            <li>{clean(item)}</li>
+            <li set:html={renderItem(item)} />
           ))}
         </ul>
       </div>

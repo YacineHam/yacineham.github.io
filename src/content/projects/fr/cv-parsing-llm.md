@@ -1,31 +1,24 @@
 ---
 title: "Pipeline de parsing de CV par LLM"
-summary: "Extraction et structuration automatiques des profils freelances sur une plateforme à 256 000+ utilisateurs. LLM, Django."
-tags: [LLM, Python, Django, NLP]
+summary: "Pipeline LLM (Qwen via Ollama) à sortie JSON contrainte par schéma Pydantic, qui extrait et structure les profils freelances à l'onboarding d'Ureed (256 000+ utilisateurs actifs)."
+tags: [LLM, Ollama, Pydantic, Django]
 year: 2025
-order: 2
+order: 3
 icon: cpu
 logo: "/logos/ureed.png"
 brandColor: "#006df5"
-# TODO Yacine : vraie URL du repo, ou supprimer la ligne
-repo: "https://github.com/yacinehamitou/cv-parsing-llm"
 ---
 
 ## Contexte
 
-Sur la plateforme **Ureed** (256 000+ utilisateurs actifs), l'onboarding des freelances exigeait une saisie manuelle fastidieuse de leur profil. J'ai conçu un pipeline basé sur LLM qui automatise l'extraction et la structuration des profils à partir de leur CV.
+**Ureed** est une marketplace freelance de 256 000+ utilisateurs actifs. À l'onboarding, chaque freelance doit renseigner son profil. J'ai construit un pipeline qui extrait et structure ce profil automatiquement à partir du CV.
 
 ## Ce que j'ai construit
 
-- Pipeline d'ingestion de CV (PDF/DOCX) avec extraction de texte et normalisation.
-- Prompting structuré et validation des sorties LLM pour extraire de façon fiable : expériences, compétences, langues, formations.
-- Intégration au flux d'onboarding Django/DRF existant, avec fallback manuel en cas d'échec du parsing.
-
-## Résultats
-
-- Amélioration significative de l'expérience d'onboarding : un profil pré-rempli en quelques secondes au lieu d'une saisie manuelle complète.
-- Meilleure qualité et homogénéité des données profils, au bénéfice du matching missions/freelances.
+- Un pipeline de parsing de CV par LLM, avec **Qwen servi par Ollama**.
+- Une **sortie JSON contrainte par un schéma Pydantic** : le modèle doit produire un JSON conforme au schéma, ce qui rend la sortie directement exploitable par le backend.
+- L'extraction et la structuration automatiques des profils freelances à l'onboarding.
 
 ## Stack
 
-Python · Django · Django REST Framework · LLM APIs · Celery · PostgreSQL
+Python · Qwen · Ollama · Pydantic · Django / DRF

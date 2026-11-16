@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n/ui';
+---
+
+<Base locale="fr" path="/" title={`${t('fr', 'notFound.title')} · Yacine Hamitou`} noindex>
+  <article class="prose not-found">
+    <p class="meta">404</p>
+    <h1>{t('fr', 'notFound.title')} / {t('en', 'notFound.title')}</h1>
+    <p>{t('fr', 'notFound.body')}<br />{t('en', 'notFound.body')}</p>
+    <p>
+      <a href="/">{t('fr', 'notFound.back')}</a> · <a href="/en/">{t('en', 'notFound.back')}</a>
+    </p>
+  </article>
+</Base>

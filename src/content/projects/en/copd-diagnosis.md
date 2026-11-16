@@ -1,12 +1,10 @@
 ---
-title: "COPD Diagnosis — ML for respiratory diagnosis"
-summary: "Respiratory-diagnosis web app with an end-to-end ML pipeline: CNN, MFCC spectrograms, REST API."
+title: "Respiratory diagnosis with machine learning"
+summary: "Web app assisting respiratory diagnosis (COPD) with an end-to-end ML pipeline: CNN, MFCC spectrograms, REST API."
 tags: [Machine Learning, CNN, Django, React]
 year: 2022
-order: 4
+order: 6
 icon: activity
-# TODO Yacine: real repo URL, or remove the line
-repo: "https://github.com/yacinehamitou/copd-diagnosis"
 ---
 
 ## Context
@@ -15,14 +13,14 @@ Research project at **URD-SE** (Research & Development Unit, Sidi Bel Abbès): a
 
 ## What I built
 
-- **End-to-end ML pipeline**: audio file preprocessing (MKV), MFCC spectrogram transformation, data augmentation and normalization.
-- **CNN model** for respiratory disease classification, designed and trained for this use case.
+- **End-to-end ML pipeline**: audio file preprocessing, MFCC spectrogram transformation, data augmentation and normalization.
+- **CNN model** classifying respiratory diseases.
 - **Django + React web app** serving diagnosis results through a REST API.
 
 ## What I took away
 
-The first project where I carried an ML system from notebook to usable application — it's what steered me toward backend engineering applied to ML and NLP systems.
+It was the first project where I carried a machine learning system all the way to a usable application.
 
 ## Stack
 
-Python · Django · React · TensorFlow/Keras (CNN) · Librosa (MFCC) · REST API
+Python · Django · React · CNN · MFCC · REST API

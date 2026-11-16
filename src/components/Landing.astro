@@ -32,11 +32,11 @@ const changelog = byLocale(await getCollection('changelog'), locale).sort(
     </div>
   </section>
 
-  <Certifications locale={locale} />
-
   <section id="changelog">
     <h2 class="section-title">{t(locale, 'changelog.title')}</h2>
     <p class="section-intro">{t(locale, 'changelog.intro')}</p>
     {changelog.map((entry) => <ChangelogEntry entry={entry} locale={locale} />)}
   </section>
+
+  <Certifications locale={locale} />
 </Base>

@@ -31,7 +31,7 @@ const { locale } = Astro.props;
           </span>
           <div class="cert-body">
             <h3>{cert.name}</h3>
-            <p class="cert-meta">{cert.issuer} · {cert.year}</p>
+            <p class="cert-meta">{cert.issuer}{cert.year && ` · ${cert.year}`}</p>
           </div>
           {cert.url && (
             <a

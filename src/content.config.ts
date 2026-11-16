@@ -15,6 +15,9 @@ const changelog = defineCollection({
     startDate: z.coerce.date(),
     /** Omit endDate for the current role → rendered as "Présent" / "Present" */
     endDate: z.coerce.date().optional(),
+    /** Optional display override (e.g. "2025 – 2026") when exact months are not relevant.
+        startDate is still required: it drives the ordering. */
+    period: z.string().optional(),
     tags: z.array(z.string()).default([]),
     added: z.array(z.string()).default([]),
     changed: z.array(z.string()).default([]),
@@ -40,7 +43,7 @@ const projects = defineCollection({
     /** Lower = shown first in the grid */
     order: z.number().default(99),
     /** Topic icon shown on the card — must match an Icon.astro name */
-    icon: z.enum(['cart', 'cpu', 'search', 'activity']).default('cart'),
+    icon: z.enum(['cart', 'cpu', 'search', 'activity', 'layers']).default('cart'),
     /** Optional real company logo to show instead of generic icon */
     logo: z.string().optional(),
     /** Brand color for logo background tint */

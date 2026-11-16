@@ -16,7 +16,7 @@ const path = `/projects/${slugOf(project.id)}`;
 <Base
   locale={locale}
   path={path}
-  title={`${project.data.title} — Yacine Hamitou`}
+  title={`${project.data.title} · Yacine Hamitou`}
   description={project.data.summary}
 >
   <article class="prose">
@@ -26,8 +26,8 @@ const path = `/projects/${slugOf(project.id)}`;
     <h1>{project.data.title}</h1>
     <p class="meta">
       {project.data.year} · {project.data.tags.join(' · ')}
-      {project.data.repo && <> · <a href={project.data.repo}>repo</a></>}
-      {project.data.link && <> · <a href={project.data.link}>live</a></>}
+      {project.data.repo && <> · <a href={project.data.repo} target="_blank" rel="noopener noreferrer">{t(locale, 'projects.source')}</a></>}
+      {project.data.link && <> · <a href={project.data.link} target="_blank" rel="noopener noreferrer">{t(locale, 'projects.live')}</a></>}
     </p>
     <Content />
   </article>
